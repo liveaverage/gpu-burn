@@ -1,57 +1,11 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gpu-burn-entrypoint
-data:
-  entrypoint.sh: |-
-    #!/bin/bash
-    NUM_GPUS=$(nvidia-smi -L | wc -l)
-    if [ $NUM_GPUS -eq 0 ]; then
-      echo "ERROR No GPUs found"
-      exit 1
-    fi
-
-    /app/gpu-burn 75
-
-    if [ ! $? -eq 0 ]; then 
-      exit 1
-    fi
 ---
-  apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  labels:
-    app: gpu-burn-12
   name: gpu-burn-12
 spec:
-  selector:
-    matchLabels:
-      app: gpu-burn-12
-  template:
-    metadata:
-      labels:
-        app: gpu-burn-12
-    spec:
-      tolerations:
-      - operator: Exists
-      - key: nvidia.com/gpu
-        operator: Exists
-        effect: NoSchedule
-      containers:
-      - image: quay.io/liveaverage/gpu-burn:latest
-        imagePullPolicy: Always
-        name: gpu-burn-ctr
-        command: ["/bin/entrypoint.sh"]
-        volumeMounts:
-        - name: entrypoint
-          mountPath: /bin/entrypoint.sh
-          readOnly: true
-          subPath: entrypoint.sh
-      volumes:
-        - name: entrypoint
-          configMap:
-            defaultMode: 0700
-            name: gpu-burn-entrypoint
-      nodeSelector:
-        node-role.kubernetes.io/worker: ""
-        feature.node.kubernetes.io/pci-10de.present: "true"
+  containers:
+  - name: gpu-burn-12
+    image: quay.io/liveaverage/gpu-burn:latest
+    command: ["/app/gpu_burn"]
+    args: ["75"]
