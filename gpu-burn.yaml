@@ -17,8 +17,8 @@ data:
       exit 1
     fi
 ---
-apiVersion: v1
-kind: Pod
+  apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: gpu-burn
@@ -26,11 +26,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: gpu-burn-daemonset
+      app: gpu-burn
   template:
     metadata:
       labels:
-        app: gpu-burn-daemonset
+        app: gpu-burn
     spec:
       tolerations:
       - operator: Exists
