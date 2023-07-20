@@ -11,7 +11,7 @@ data:
       exit 1
     fi
 
-    /usr/local/bin/gpu-burn 300
+    /app/gpu-burn 300
 
     if [ ! $? -eq 0 ]; then 
       exit 1
