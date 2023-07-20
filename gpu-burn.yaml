@@ -11,7 +11,7 @@ data:
       exit 1
     fi
 
-    /usr/local/bin/gpu-burn 300
+    /app/gpu-burn 300
 
     if [ ! $? -eq 0 ]; then 
       exit 1
@@ -21,16 +21,16 @@ data:
 kind: Deployment
 metadata:
   labels:
-    app: gpu-burn
-  name: gpu-burn
+    app: gpu-burn-12
+  name: gpu-burn-12
 spec:
   selector:
     matchLabels:
-      app: gpu-burn
+      app: gpu-burn-12
   template:
     metadata:
       labels:
-        app: gpu-burn
+        app: gpu-burn-12
     spec:
       tolerations:
       - operator: Exists
