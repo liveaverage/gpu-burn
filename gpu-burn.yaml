@@ -17,7 +17,7 @@ data:
       exit 1
     fi
 ---
-apiVersion: apps/v1
+apiVersion: v1
 kind: Pod
 metadata:
   labels:
