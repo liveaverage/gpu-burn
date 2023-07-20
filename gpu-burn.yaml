@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: gpu-burn-12
-    image: quay.io/liveaverage/gpu-burn:latest
+    image: quay.io/liveaverage/gpu-burn:cuda-12
     command: ["/app/gpu_burn"]
     args: ["75"]
